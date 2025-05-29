@@ -4,7 +4,7 @@ import {
     checkIfIdIsValid,
     checkIfPasswordIsValid,
     emailIsAlreadyInUseResponse,
-    invalidIdResopnse,
+    invalidIdResponse,
     invalidPasswordResponse,
     badRequest,
     ok,
@@ -20,7 +20,7 @@ export class UpdateUserController {
             const userId = httpRequest.params.userId
             const isIdValid = checkIfIdIsValid(userId)
             if (!isIdValid) {
-                return invalidIdResopnse()
+                return invalidIdResponse()
             }
 
             const params = httpRequest.body

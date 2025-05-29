@@ -11,7 +11,7 @@ export const emailIsAlreadyInUseResponse = () =>
         message: 'Invalid e-mail. Please provide a valid one.',
     })
 
-export const invalidIdResopnse = () =>
+export const invalidIdResponse = () =>
     badRequest({
         message: 'The provided ID is not valid',
     })
