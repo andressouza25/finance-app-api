@@ -1,14 +1,14 @@
 import { UserNotFoundError } from '../../errors/user.js'
 import {
-    checkIfTypeIsValid,
+    checkIfIdIsValid,
     invalidIdResponse,
     ok,
     requiredFieldsMissingResponse,
     serverError,
     userNotFoundResponse,
-} from '../helpers'
+} from '../helpers/index.js'
 
-export class GetTransactionByUserId {
+export class GetTransactionsByUserIdController {
     constructor(getTransactionByUserIdUseCase) {
         this.getTransactionByUserIdUseCase = getTransactionByUserIdUseCase
     }
@@ -20,7 +20,7 @@ export class GetTransactionByUserId {
                 return requiredFieldsMissingResponse('userId')
             }
 
-            const userIdIsValid = checkIfTypeIsValid(userId)
+            const userIdIsValid = checkIfIdIsValid(userId)
 
             if (!userIdIsValid) {
                 return invalidIdResponse()
