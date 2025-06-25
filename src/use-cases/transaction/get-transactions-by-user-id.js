@@ -1,4 +1,4 @@
-import { userNotFoundResponse } from '../../controllers/helpers.js'
+import { UserNotFoundError } from '../../errors/user.js'
 
 export class GetTransactionByUserId {
     constructor(getTransactionByUserIdRepository, getUserByIdRepository) {
@@ -9,7 +9,7 @@ export class GetTransactionByUserId {
         const user = await this.getUserByIdRepository.execute(params.userId)
 
         if (!user) {
-            return userNotFoundResponse()
+            throw new UserNotFoundError(params.userId)
         }
 
         const transaction = await this.getTransactionByUserIdRepository.execute(
