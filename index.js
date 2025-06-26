@@ -8,6 +8,7 @@ import {
 } from './src/factories/controllers/user.js'
 import {
     makeCreateTransactionController,
+    makeDeleteTransactionController,
     makeGetTransactionsByUserIdController,
     makeUpdateTransactionController,
 } from './src/factories/controllers/transaction.js'
@@ -69,6 +70,15 @@ app.post('/api/transactions', async (request, response) => {
 
 app.patch('/api/transactions/:transactionId', async (request, response) => {
     const updateTransactionController = makeUpdateTransactionController()
+
+    const { statusCode, body } =
+        await updateTransactionController.execute(request)
+
+    response.status(statusCode).send(body)
+})
+
+app.delete('/api/transactions/:transactionId', async (request, response) => {
+    const updateTransactionController = makeDeleteTransactionController()
 
     const { statusCode, body } =
         await updateTransactionController.execute(request)
