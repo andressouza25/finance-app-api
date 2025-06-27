@@ -14,7 +14,7 @@ export class GetUserBalanceController {
 
     async execute(httpRequest) {
         try {
-            const userId = httpRequest.userId
+            const userId = httpRequest.params.userId
             const isIdValid = checkIfIdIsValid(userId)
 
             if (!isIdValid) {
