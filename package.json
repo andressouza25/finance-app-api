@@ -21,6 +21,7 @@
         "prisma": "^6.11.0"
     },
     "dependencies": {
+        "@prisma/client": "^6.11.0",
         "acorn": "^8.14.1",
         "acorn-jsx": "^5.3.2",
         "ajv": "^6.12.6",
