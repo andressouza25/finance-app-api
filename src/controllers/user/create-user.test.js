@@ -7,7 +7,7 @@ describe('Create User Controller', () => {
         }
     }
 
-    it('should create an user', async () => {
+    it('should return 201 when creating an user successfully', async () => {
         // Arrange
         const createUserUseCase = new CreateUserUserCaseStub()
         const createUserController = new CreateUserController(createUserUseCase)
