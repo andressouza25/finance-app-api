@@ -94,7 +94,7 @@ describe('Create User Controller', () => {
             body: {
                 first_name: 'André',
                 last_name: 'Santos',
-                email: 'fe',
+                email: 'santos',
                 password: '123456',
             },
         }
@@ -115,6 +115,25 @@ describe('Create User Controller', () => {
                 first_name: 'André',
                 last_name: 'Santos',
                 email: 'santos@gmail.com',
+            },
+        }
+        // Act
+        const result = await createUserController.execute(httpRequest)
+
+        // Assert
+        expect(result.statusCode).toBe(400)
+    })
+
+    it('should return 400 if password is not valid', async () => {
+        // Arrange
+        const createUserUseCase = new CreateUserUserCaseStub()
+        const createUserController = new CreateUserController(createUserUseCase)
+        const httpRequest = {
+            body: {
+                first_name: 'André',
+                last_name: 'Santos',
+                email: 'santos@gmail.com',
+                password: '123',
             },
         }
         // Act
