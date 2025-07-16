@@ -36,4 +36,16 @@ describe('GetTransactionByUserId', () => {
         // Assert
         expect(result.statusCode).toBe(200)
     })
+    it('should return 400 when missing userId param', async () => {
+        // Arrange
+        const { sut } = makeSut()
+
+        // Act
+        const result = await sut.execute({
+            query: { userId: undefined },
+        })
+
+        // Assert
+        expect(result.statusCode).toBe(400)
+    })
 })
