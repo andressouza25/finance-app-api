@@ -109,4 +109,19 @@ describe('CreateTransactionController', () => {
         // Assert
         expect(result.statusCode).toBe(400)
     })
+    it('should return 400 when date is invalid', async () => {
+        // Arrange
+        const { sut } = makeSut()
+
+        // Act
+        const result = await sut.execute({
+            body: {
+                ...httpRequest.body,
+                date: 'invalid_date',
+            },
+        })
+
+        // Assert
+        expect(result.statusCode).toBe(400)
+    })
 })
