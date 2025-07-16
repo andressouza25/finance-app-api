@@ -64,4 +64,19 @@ describe('CreateTransactionController', () => {
         // Assert
         expect(result.statusCode).toBe(400)
     })
+    it('should return 400 when missing date', async () => {
+        // Arrange
+        const { sut } = makeSut()
+
+        // Act
+        const result = await sut.execute({
+            body: {
+                ...httpRequest.body,
+                date: undefined,
+            },
+        })
+
+        // Assert
+        expect(result.statusCode).toBe(400)
+    })
 })
