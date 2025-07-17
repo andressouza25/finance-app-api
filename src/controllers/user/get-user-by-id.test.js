@@ -23,14 +23,16 @@ describe('GetUserByIdController', () => {
         return { sut, getUserByIdUseCase }
     }
 
+    const httpRequest = {
+        params: { userId: faker.string.uuid() },
+    }
+
     it('should return 200 if user is found', async () => {
         // Arrange
         const { sut } = makeSut()
 
         // Act
-        const result = await sut.execute({
-            params: { userId: faker.string.uuid() },
-        })
+        const result = await sut.execute(httpRequest)
 
         // Assert
         expect(result.statusCode).toBe(200)
@@ -53,9 +55,7 @@ describe('GetUserByIdController', () => {
         jest.spyOn(getUserByIdUseCase, 'execute').mockResolvedValueOnce(null)
 
         // Act
-        const result = await sut.execute({
-            params: { userId: faker.string.uuid() },
-        })
+        const result = await sut.execute(httpRequest)
         // Assert
         expect(result.statusCode).toBe(404)
     })
@@ -67,11 +67,19 @@ describe('GetUserByIdController', () => {
             new Error(),
         )
         // Act
-        const result = await sut.execute({
-            params: { userId: faker.string.uuid() },
-        })
+        const result = await sut.execute(httpRequest)
 
         // Assert
         expect(result.statusCode).toBe(500)
+    })
+    it('should call GetUserByIdUseCase with correct params', async () => {
+        // Arrange
+        const { sut, getUserByIdUseCase } = makeSut()
+        const executeSpy = jest.spyOn(getUserByIdUseCase, 'execute')
+        // Act
+        await sut.execute(httpRequest)
+
+        // Assert
+        expect(executeSpy).toHaveBeenCalledWith(httpRequest.params.userId)
     })
 })
