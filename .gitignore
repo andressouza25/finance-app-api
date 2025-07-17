@@ -8,3 +8,6 @@ node_modules
 .postgres
 .postgres-data
 /src/generated/prisma
+
+# Tests
+coverage
