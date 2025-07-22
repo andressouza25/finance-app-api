@@ -2,7 +2,7 @@ import { faker } from '@faker-js/faker'
 import { CreateUserUseCase } from './create-user'
 import { EmailAlreadyInUseError } from '../../errors/user'
 
-describe('Create User Use Case', () => {
+describe('CreateUserUseCase', () => {
     class GetUserByEmailRepositoryStub {
         async execute() {
             return null
@@ -62,6 +62,41 @@ describe('Create User Use Case', () => {
 
         // Assert
         expect(createdUser).toBeTruthy()
+    })
+    it('should throw an EmailAlreadyInUseError if GetUserByEmailRepository returns a user', async () => {
+        // Arrange
+        const { sut, getUserByEmailRepository } = makeSut()
+        jest.spyOn(getUserByEmailRepository, 'execute').mockReturnValueOnce(
+            user,
+        )
+
+        // Act
+        const promise = sut.execute(user)
+
+        // Assert
+        await expect(promise).rejects.toThrow(
+            new EmailAlreadyInUseError(user.email),
+        )
+    })
+    it('should call Id GeneratorAdapter to generate a random id ', async () => {
+        // Arrange
+        const { sut, idGeneratorAdapter, createUserUseRepository } = makeSut()
+        const idGeneratorSpy = jest.spyOn(idGeneratorAdapter, 'execute')
+        const createUserUseRepositorySpy = jest.spyOn(
+            createUserUseRepository,
+            'execute',
+        )
+
+        // Act
+        await sut.execute(user)
+
+        // Assert
+        expect(idGeneratorSpy).toHaveBeenCalled()
+        expect(createUserUseRepositorySpy).toHaveBeenCalledWith({
+            ...user,
+            password: 'hashed_password',
+            id: 'generated_id',
+        })
     })
     it('should throw an EmailAlreadyInUseError if GetUserByEmailRepository returns a user', async () => {
         // Arrange
