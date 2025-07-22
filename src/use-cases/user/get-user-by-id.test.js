@@ -33,4 +33,17 @@ describe('GetUserByIdUseCase', () => {
         // Assert
         expect(result).toEqual(user)
     })
+
+    it('should call GetUserByIdRepository with correct params', async () => {
+        // Arrange
+        const { sut, getUserByIdRepositoryStub } = makeSut()
+        const executeSpy = jest.spyOn(getUserByIdRepositoryStub, 'execute')
+        const userId = faker.string.uuid()
+
+        // Act
+        await sut.execute(userId)
+
+        // Assert
+        expect(executeSpy).toHaveBeenCalledWith(userId)
+    })
 })
