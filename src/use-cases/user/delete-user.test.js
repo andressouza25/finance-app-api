@@ -47,4 +47,17 @@ describe('DeleteUserUseCase', () => {
         // Assert
         expect(executeSpy).toHaveBeenCalledWith(userId)
     })
+    it('should throw if DeleteUserRepository throws', async () => {
+        // Arrange
+        const { sut, deleteUserRepository } = makeSut()
+        jest.spyOn(deleteUserRepository, 'execute').mockRejectedValueOnce(
+            new Error(),
+        )
+
+        // Act
+        const promise = sut.execute(faker.string.uuid())
+
+        // Assert
+        await expect(promise).rejects.toThrow()
+    })
 })
