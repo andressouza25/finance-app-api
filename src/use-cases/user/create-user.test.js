@@ -175,4 +175,19 @@ describe('CreateUserUseCase', () => {
         // Assert
         await expect(promise).rejects.toThrow()
     })
+    it('should throw if CreateUserRepository', async () => {
+        // Arrange
+        const { sut, createUserUseRepository } = makeSut()
+        jest.spyOn(createUserUseRepository, 'execute').mockImplementationOnce(
+            () => {
+                throw new Error()
+            },
+        )
+
+        // Act
+        const promise = sut.execute(user)
+
+        // Assert
+        await expect(promise).rejects.toThrow()
+    })
 })
