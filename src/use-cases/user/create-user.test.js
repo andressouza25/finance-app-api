@@ -113,4 +113,25 @@ describe('CreateUserUseCase', () => {
             new EmailAlreadyInUseError(user.email),
         )
     })
+    it('should call PasswordHasherAdapter to cryptograph password', async () => {
+        // Arrange
+        const { sut, createUserUseRepository, passwordHasherAdapter } =
+            makeSut()
+        const passwordHasherSpy = jest.spyOn(passwordHasherAdapter, 'execute')
+        const createUserUseRepositorySpy = jest.spyOn(
+            createUserUseRepository,
+            'execute',
+        )
+
+        // Act
+        await sut.execute(user)
+
+        // Assert
+        expect(passwordHasherSpy).toHaveBeenCalledWith(user.password)
+        expect(createUserUseRepositorySpy).toHaveBeenCalledWith({
+            ...user,
+            password: 'hashed_password',
+            id: 'generated_id',
+        })
+    })
 })
