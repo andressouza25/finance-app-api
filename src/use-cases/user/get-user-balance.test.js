@@ -53,6 +53,7 @@ describe('GetUserBalanceUseCase', () => {
         // Assert
         expect(result).toEqual(userBalance)
     })
+
     it('should throw UserNotFoundError if GetUserByIdRepository returns null', async () => {
         // Arrange
         const { sut, getUserByIdRepository } = makeSut()
@@ -64,5 +65,21 @@ describe('GetUserBalanceUseCase', () => {
 
         // Assert
         expect(promise).rejects.toThrow(new UserNotFoundError(userId))
+    })
+
+    it('call GetUserByIdRepository with correct params', async () => {
+        // Arrange
+        const { sut, getUserByIdRepository } = makeSut()
+        const userId = faker.string.uuid()
+        const getUserByIdRepositorySpy = jest.spyOn(
+            getUserByIdRepository,
+            'execute',
+        )
+
+        // Act
+        await sut.execute(userId)
+
+        // Assert
+        expect(getUserByIdRepositorySpy).toHaveBeenCalledWith(userId)
     })
 })
