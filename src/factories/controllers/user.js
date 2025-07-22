@@ -8,7 +8,7 @@ import {
 import {
     CreateUserUseCase,
     DeleteUserUseCase,
-    GetUserBalanceUserCase,
+    GetUserBalanceUseCase,
     GetUserByIdUseCase,
     UpdateUserUseCase,
 } from '../../use-cases/index.js'
@@ -74,7 +74,7 @@ export const makeDeleteUserController = () => {
 export const makeGetUserBalanceController = () => {
     const getUserBalanceRepository = new PostgresGetUserBalanceRepository()
     const getUserByIdRepository = new PostgresGetUserByIdRepository()
-    const getUserBalanceUseCase = new GetUserBalanceUserCase(
+    const getUserBalanceUseCase = new GetUserBalanceUseCase(
         getUserBalanceRepository,
         getUserByIdRepository,
     )
