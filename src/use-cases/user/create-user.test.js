@@ -13,7 +13,7 @@ describe('CreateUserUseCase', () => {
         }
     }
     class CreateUserUseRepositoryStub {
-        async execute(user) {
+        async execute() {
             return user
         }
     }
