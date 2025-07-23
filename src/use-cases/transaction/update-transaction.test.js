@@ -1,20 +1,13 @@
 import { faker } from '@faker-js/faker'
 import { UpdateTransactionUseCase } from './update-transaction'
+import { transaction } from '../../tests'
 
 describe('UpdateTransactionUseCase', () => {
-    const createTransactionParams = {
-        id: faker.string.uuid(),
-        user_id: faker.string.uuid(),
-        name: faker.commerce.productName(),
-        date: faker.date.anytime().toISOString(),
-        type: 'EXPENSE',
-        amount: Number(faker.finance.amount()),
-    }
     class UpdateTransactionRepositoryStub {
         async execute(transactionId) {
             return {
                 id: transactionId,
-                ...createTransactionParams,
+                ...transaction,
             }
         }
     }
@@ -36,7 +29,7 @@ describe('UpdateTransactionUseCase', () => {
         })
 
         // Assert
-        expect(result).toEqual(createTransactionParams)
+        expect(result).toEqual(transaction)
     })
     it('should call UpdateTransactionRepository with correct params', async () => {
         // Arrange
@@ -47,15 +40,15 @@ describe('UpdateTransactionUseCase', () => {
         )
 
         // Act
-        await sut.execute(createTransactionParams.id, {
-            amount: createTransactionParams.amount,
+        await sut.execute(transaction.id, {
+            amount: transaction.amount,
         })
 
         // Assert
         expect(updateTransactionRepositorySpy).toHaveBeenCalledWith(
-            createTransactionParams.id,
+            transaction.id,
             {
-                amount: createTransactionParams.amount,
+                amount: transaction.amount,
             },
         )
     })
@@ -70,8 +63,8 @@ describe('UpdateTransactionUseCase', () => {
         })
 
         // Act
-        const promise = sut.execute(createTransactionParams.id, {
-            amount: createTransactionParams.amount,
+        const promise = sut.execute(transaction.id, {
+            amount: transaction.amount,
         })
 
         // Assert
