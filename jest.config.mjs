@@ -5,6 +5,7 @@ const config = {
     coverageProvider: 'v8',
     collectCoverageFrom: ['src/**/*.js', '!**/generated/**'],
     watchPathIgnorePatterns: ['<rootDir>/postgres-data/'],
+    globalSetup: '<rootDir>/jest.global-setup.mjs',
 }
 
 export default config
