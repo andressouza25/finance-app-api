@@ -4,6 +4,7 @@ const config = {
     coverageDirectory: 'coverage',
     coverageProvider: 'v8',
     collectCoverageFrom: ['src/**/*.js', '!**/generated/**'],
+    watchPathIgnorePatterns: ['<rootDir>/postgres-data/'],
 }
 
 export default config
