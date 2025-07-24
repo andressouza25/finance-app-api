@@ -20,4 +20,4 @@ services:
             POSTGRES_USER: postgres
             POSTGRES_DB: finance-app
         ports:
-            - '5433:5433'
+            - '5433:5432'
