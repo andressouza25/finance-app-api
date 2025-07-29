@@ -6,12 +6,11 @@ describe('CreateUserRepository', () => {
         const sut = new PostgresCreateUserRepository()
 
         const result = await sut.execute(user)
-        expect(result).toBeTruthy()
-    })
-    it('should create a user on db', async () => {
-        const sut = new PostgresCreateUserRepository()
 
-        const result = await sut.execute(user)
-        expect(result).toBeTruthy()
+        expect(result.id).toBeDefined(user.id)
+        expect(result.first_name).toBe(user.first_name)
+        expect(result.last_name).toBe(user.last_name)
+        expect(result.email).toBe(user.email)
+        expect(result.password).toBe(user.password)
     })
 })
