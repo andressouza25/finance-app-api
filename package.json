@@ -4,9 +4,9 @@
     "main": "index.js",
     "type": "module",
     "scripts": {
-        "test": "dotenv -e .env.test -- jest --passWithNoTests --silent --runInBand",
+        "test": "dotenv -e .env.test -- jest --passWithNoTests --silent",
         "test:watch": "npm run test -- --watch",
-        "test:coverage": "npm run test -- --coverage",
+        "test:coverage": "npm run test -- --coverage --runInBand",
         "postinstall": "husky install && prisma generate",
         "start:dev": "node --watch index.js"
     },
@@ -45,6 +45,7 @@
         "color-name": "^1.1.4",
         "concat-map": "^0.0.1",
         "cross-spawn": "^7.0.6",
+        "dayjs": "^1.11.13",
         "debug": "^4.4.1",
         "deep-is": "^0.1.4",
         "doctrine": "^3.0.0",
