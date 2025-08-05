@@ -5,7 +5,7 @@ import {
     ok,
     userNotFoundResponse,
 } from '../helpers/index.js'
-
+import { UserNotFoundError } from '../../errors/index.js'
 export class DeleteUserController {
     constructor(deleteUserUseCase) {
         this.deleteUserUseCase = deleteUserUseCase
@@ -20,12 +20,11 @@ export class DeleteUserController {
 
             const deletedUser = await this.deleteUserUseCase.execute(userId)
 
-            if (!deletedUser) {
-                return userNotFoundResponse()
-            }
-
             return ok(deletedUser)
         } catch (error) {
+            if (error instanceof UserNotFoundError) {
+                return userNotFoundResponse()
+            }
             console.log(error)
             return serverError()
         }
