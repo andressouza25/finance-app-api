@@ -11,6 +11,9 @@ const config = {
     ],
     globalSetup: '<rootDir>/jest.global-setup.js',
     setupFilesAfterEnv: ['<rootDir>/jest.setup-after-env.js'],
+
+    // ✅ Adicionado para remover stack trace detalhado nos erros
+    noStackTrace: true,
 }
 
 export default config
