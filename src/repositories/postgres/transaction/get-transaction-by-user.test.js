@@ -47,7 +47,6 @@ describe('PostgresGetTransactionByUserIdRepository', () => {
         jest.spyOn(prisma.transaction, 'findMany').mockRejectedValueOnce(
             new Error(),
         )
-
         const promise = sut.execute(user.id)
 
         await expect(promise).rejects.toThrow()
