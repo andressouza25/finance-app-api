@@ -1,5 +1,4 @@
 import { IdGeneratorAdapter } from './id-generator'
-import validator from 'validator'
 
 describe('IdGeneratorAdapter', () => {
     it('should return a random id', async () => {
