@@ -1,5 +1,6 @@
 import { prisma } from '../../../../prisma/prisma.js'
-
+import { UserNotFoundError } from '../../../errors/index.js'
+import { PrismaClientKnownRequestError } from '../../../generated/prisma/runtime/library.js'
 export class PostgresDeleteUserRepository {
     async execute(userId) {
         try {
@@ -9,7 +10,12 @@ export class PostgresDeleteUserRepository {
                 },
             })
         } catch (error) {
-            return null
+            if (error instanceof PrismaClientKnownRequestError) {
+                if (error.code === 'P2025') {
+                    throw new UserNotFoundError(userId)
+                }
+            }
+            throw error
         }
     }
 }
