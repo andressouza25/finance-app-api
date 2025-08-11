@@ -40,7 +40,7 @@ describe('Transaction Routes E2E Test', () => {
         expect(response.body[0].id).toBe(createdTransaction.id)
     })
 
-    it('PATCH /api/transaction?userId should return 200 when updating a transaction successfully', async () => {
+    it('PATCH /api/transactionId should return 200 when updating a transaction successfully', async () => {
         const { body: createdUser } = await request(app)
             .post('/api/users')
             .send({
