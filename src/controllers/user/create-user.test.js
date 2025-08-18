@@ -128,7 +128,7 @@ describe('Create User Controller', () => {
     it('should call CreateUserUseCase with corect params', async () => {
         // Arrange
         const { createUserUseCase, sut } = makeSut()
-        const executeSpy = jest.spyOn(createUserUseCase, 'execute')
+        const executeSpy = import.meta.jest.spyOn(createUserUseCase, 'execute')
 
         // Act
         await sut.execute(httpRequest)
@@ -140,9 +140,9 @@ describe('Create User Controller', () => {
     it('should return 500 if CreateUserUseCase throws ', async () => {
         // Arrange
         const { createUserUseCase, sut } = makeSut()
-        jest.spyOn(createUserUseCase, 'execute').mockRejectedValueOnce(
-            new Error(),
-        )
+        import.meta.jest
+            .spyOn(createUserUseCase, 'execute')
+            .mockRejectedValueOnce(new Error())
 
         // Act
         const result = await sut.execute(httpRequest)
@@ -154,9 +154,11 @@ describe('Create User Controller', () => {
     it('should return 500 if CreateUserUseCase throws EmailAlreadyInUseError', async () => {
         // Arrange
         const { createUserUseCase, sut } = makeSut()
-        jest.spyOn(createUserUseCase, 'execute').mockRejectedValueOnce(
-            new EmailAlreadyInUseError(httpRequest.body.email),
-        )
+        import.meta.jest
+            .spyOn(createUserUseCase, 'execute')
+            .mockRejectedValueOnce(
+                new EmailAlreadyInUseError(httpRequest.body.email),
+            )
 
         // Act
         const result = await sut.execute(httpRequest)

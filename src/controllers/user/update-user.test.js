@@ -108,9 +108,9 @@ describe('UpdateUserController', () => {
     it('should return 500 if UpdateUserUseCase throws', async () => {
         // Arrange
         const { sut, updateUserUseCase } = makeSut()
-        jest.spyOn(updateUserUseCase, 'execute').mockRejectedValueOnce(
-            new Error(),
-        )
+        import.meta.jest
+            .spyOn(updateUserUseCase, 'execute')
+            .mockRejectedValueOnce(new Error())
 
         // Act
         const result = await sut.execute(httpRequest)
@@ -122,9 +122,11 @@ describe('UpdateUserController', () => {
     it('should return 400 if UpdateUserUseCase throws EmailAlreadyUseError', async () => {
         // Arrange
         const { sut, updateUserUseCase } = makeSut()
-        jest.spyOn(updateUserUseCase, 'execute').mockRejectedValueOnce(
-            new EmailAlreadyInUseError(faker.internet.email()),
-        )
+        import.meta.jest
+            .spyOn(updateUserUseCase, 'execute')
+            .mockRejectedValueOnce(
+                new EmailAlreadyInUseError(faker.internet.email()),
+            )
 
         // Act
         const result = await sut.execute(httpRequest)
@@ -136,7 +138,7 @@ describe('UpdateUserController', () => {
     it('should call UpdateUserUseCase with correct params', async () => {
         // Arrange
         const { sut, updateUserUseCase } = makeSut()
-        const executeSpy = jest.spyOn(updateUserUseCase, 'execute')
+        const executeSpy = import.meta.jest.spyOn(updateUserUseCase, 'execute')
 
         // Act
         await sut.execute(httpRequest)
@@ -151,9 +153,9 @@ describe('UpdateUserController', () => {
     it('should return 404 if UpdateUserUseCase throws UserNotFoundError', async () => {
         // Arrange
         const { sut, updateUserUseCase } = makeSut()
-        jest.spyOn(updateUserUseCase, 'execute').mockRejectedValueOnce(
-            new UserNotFoundError(faker.string.uuid()),
-        )
+        import.meta.jest
+            .spyOn(updateUserUseCase, 'execute')
+            .mockRejectedValueOnce(new UserNotFoundError(faker.string.uuid()))
 
         // Act
         const result = await sut.execute(httpRequest)
