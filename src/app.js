@@ -10,6 +10,8 @@ const __dirname = dirname(__filename)
 
 const app = express()
 
+const name = ''
+
 app.use(express.json())
 
 app.use('/api/users', usersRouter)
