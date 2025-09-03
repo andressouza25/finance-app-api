@@ -1,6 +1,6 @@
 /** @type {import('jest').Config} */
 const config = {
-    // collectCoverage: true,
+    testEnvironment: 'node',
     coverageDirectory: 'coverage',
     coverageProvider: 'v8',
     collectCoverageFrom: ['src/**/*.js', '!**/generated/**'],
@@ -11,9 +11,8 @@ const config = {
     ],
     globalSetup: '<rootDir>/jest.global-setup.js',
     setupFilesAfterEnv: ['<rootDir>/jest.setup-after-env.js'],
-
-    // ✅ Adicionado para remover stack trace detalhado nos erros
     noStackTrace: true,
+    transform: {}, // ESM puro, sem Babel
 }
 
 export default config
