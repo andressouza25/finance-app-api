@@ -19,7 +19,7 @@ export class LoginUserController {
             await loginSchema.parseAsync(params)
             const user = await this.loginUserUseCase.execute(
                 params.email,
-                params.pasword,
+                params.password,
             )
             return ok(user)
         } catch (error) {
