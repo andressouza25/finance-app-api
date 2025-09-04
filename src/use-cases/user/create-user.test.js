@@ -28,17 +28,28 @@ describe('CreateUserUseCase', () => {
         }
     }
 
+    class TokensGeneratorAdapterStub {
+        execute() {
+            return {
+                accessToken: 'any_access_token',
+                refreshToken: 'any_refresh_token',
+            }
+        }
+    }
+
     const makeSut = () => {
         const getUserByEmailRepository = new GetUserByEmailRepositoryStub()
         const createUserUseRepository = new CreateUserUseRepositoryStub()
         const passwordHasherAdapter = new PasswordHasherAdapterStub()
         const idGeneratorAdapter = new IdGeneratorAdapterStub()
+        const tokensGeneratorAdapter = new TokensGeneratorAdapterStub()
 
         const sut = new CreateUserUseCase(
             getUserByEmailRepository,
             createUserUseRepository,
             passwordHasherAdapter,
             idGeneratorAdapter,
+            tokensGeneratorAdapter,
         )
 
         return {
@@ -47,6 +58,7 @@ describe('CreateUserUseCase', () => {
             createUserUseRepository,
             passwordHasherAdapter,
             idGeneratorAdapter,
+            tokensGeneratorAdapter,
         }
     }
 
@@ -59,6 +71,8 @@ describe('CreateUserUseCase', () => {
 
         // Assert
         expect(createdUser).toBeTruthy()
+        expect(createdUser.tokens.accessToken).toBeDefined()
+        expect(createdUser.tokens.refreshToken).toBeDefined()
     })
     it('should throw an EmailAlreadyInUseError if GetUserByEmailRepository returns a user', async () => {
         // Arrange
