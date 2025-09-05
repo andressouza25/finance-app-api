@@ -1,4 +1,4 @@
-import { jwt } from 'zod'
+import jwt from 'jsonwebtoken'
 
 export class TokenVerifierAdapter {
     execute(token, secret) {
