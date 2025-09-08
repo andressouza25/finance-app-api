@@ -28,13 +28,15 @@ describe('GetUserBalanceUseCase', () => {
             sut,
         }
     }
+    const from = '2025-01-01'
+    const to = '2025-02-01'
 
     it('should get user balance successfully', async () => {
         // Arrange
         const { sut } = makeSut()
 
         // Act
-        const result = await sut.execute(faker.string.uuid())
+        const result = await sut.execute(faker.string.uuid(), from, to)
 
         // Assert
         expect(result).toEqual(userBalance)
@@ -49,7 +51,7 @@ describe('GetUserBalanceUseCase', () => {
         const userId = faker.string.uuid()
 
         // Act
-        const promise = sut.execute(userId)
+        const promise = sut.execute(userId, from, to)
 
         // Assert
         expect(promise).rejects.toThrow(new UserNotFoundError(userId))
@@ -65,7 +67,7 @@ describe('GetUserBalanceUseCase', () => {
         )
 
         // Act
-        await sut.execute(userId)
+        await sut.execute(userId, from, to)
 
         // Assert
         expect(executeSpy).toHaveBeenCalledWith(userId)
@@ -80,10 +82,10 @@ describe('GetUserBalanceUseCase', () => {
         )
 
         // Act
-        await sut.execute(userId)
+        await sut.execute(userId, from, to)
 
         // Assert
-        expect(executeSpy).toHaveBeenCalledWith(userId)
+        expect(executeSpy).toHaveBeenCalledWith(userId, from, to)
     })
     it('should throw if GetUserByIdRepository throws', async () => {
         // Arrange
@@ -93,7 +95,7 @@ describe('GetUserBalanceUseCase', () => {
             .mockRejectedValue(new Error())
 
         // Act
-        const promise = sut.execute(faker.string.uuid())
+        const promise = sut.execute(faker.string.uuid(), from, to)
 
         // Assert
         await expect(promise).rejects.toThrow()
