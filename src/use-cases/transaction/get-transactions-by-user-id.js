@@ -5,15 +5,18 @@ export class GetTransactionsByUserIdUseCase {
         this.getTransactionByUserIdRepository = getTransactionByUserIdRepository
         this.getUserByIdRepository = getUserByIdRepository
     }
-    async execute(userId) {
+    async execute(userId, from, to) {
         const user = await this.getUserByIdRepository.execute(userId)
 
         if (!user) {
             throw new UserNotFoundError(userId)
         }
 
-        const transaction =
-            await this.getTransactionByUserIdRepository.execute(userId)
+        const transaction = await this.getTransactionByUserIdRepository.execute(
+            userId,
+            from,
+            to,
+        )
 
         return transaction
     }
