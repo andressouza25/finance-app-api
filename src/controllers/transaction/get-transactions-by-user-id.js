@@ -1,9 +1,9 @@
+import { ZodError } from 'zod'
 import { UserNotFoundError } from '../../errors/user.js'
+import { getTransactionByUserIdSchema } from '../../schemas/transaction.js'
 import {
-    checkIfIdIsValid,
-    invalidIdResponse,
+    badRequest,
     ok,
-    requiredFieldsMissingResponse,
     serverError,
     userNotFoundResponse,
 } from '../helpers/index.js'
@@ -15,16 +15,14 @@ export class GetTransactionsByUserIdController {
     async execute(httpRequest) {
         try {
             const userId = httpRequest.query.userId
+            const from = httpRequest.query.from
+            const to = httpRequest.query.to
 
-            if (!userId) {
-                return requiredFieldsMissingResponse('userId')
-            }
-
-            const userIdIsValid = checkIfIdIsValid(userId)
-
-            if (!userIdIsValid) {
-                return invalidIdResponse()
-            }
+            await getTransactionByUserIdSchema.parseAsync({
+                user_id: userId,
+                from,
+                to,
+            })
 
             const transactions =
                 await this.getTransactionByUserIdUseCase.execute(userId)
@@ -34,6 +32,11 @@ export class GetTransactionsByUserIdController {
             console.log(error)
             if (error instanceof UserNotFoundError) {
                 return userNotFoundResponse()
+            }
+            if (error instanceof ZodError) {
+                return badRequest({
+                    message: error.issues[0].message,
+                })
             }
 
             return serverError()
