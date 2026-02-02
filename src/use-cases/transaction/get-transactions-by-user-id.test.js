@@ -74,7 +74,7 @@ describe('GetTransactionByUserIdUseCase', () => {
         const from = '2025-01-01'
         const to = '2025-02-01'
         // Act
-        await sut.execute(id, from, id)
+        await sut.execute(id, from, to)
 
         // Assert
         expect(getTransactionByUserIdRepositorySpy).toHaveBeenCalledWith(
